@@ -112,14 +112,14 @@ public class Orders {
         }
     }
 
-    public static void main (String args[]) {
+    /* public static void main (String args[]) {
         Scanner sc = new Scanner (System.in);
         int     choice = 0;
         System.out.println("Enter [1] Create and Order [2] Inquire Products [3] Retrieve Order  [4] Cancel Order:");
         choice = sc.nextInt();
 
         Orders o = new Orders();
-//        if (choice == 1) o.getOrder();
+        // if (choice == 1) o.getOrder();
         if (choice == 2) new Products().getInfo();
         if (choice == 3) o.getOrder();
         if (choice == 4) o.cancelOrder();
@@ -127,4 +127,5 @@ public class Orders {
         System.out.println("Press enter key to continue....");
         sc.nextLine();
     }
+    */
 }
