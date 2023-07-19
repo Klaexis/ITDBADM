@@ -34,8 +34,6 @@ public class Create {
         System.out.println("Enter Product Code: ");
         String productCode = sc.nextLine();
 
-
-
         sc.close();
     }
 }
