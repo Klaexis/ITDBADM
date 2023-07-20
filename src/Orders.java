@@ -120,7 +120,7 @@ public class Orders {
 
         Orders o = new Orders();
         // if (choice == 1) o.getOrder();
-        if (choice == 2) new Products().getInfo();
+        // if (choice == 2) new Products().getInfo();
         if (choice == 3) o.getOrder();
         if (choice == 4) o.cancelOrder();
 
