@@ -6,12 +6,15 @@ import java.util.*;
 public class Create {
     private MainMenu mainMenuTab;
 
-    private String url = 
-    "jdbc:mysql://localhost:3306/dbsales?useTimezone=true&serverTimezone=UTC&user=root&password=1234";
+    private String url = "jdbc:mysql://localhost:3306/dbsales";
+    private String username = "root";
+    private String password = "1234";
 
     private int customerNumber;
     private int verifyCustomer;
     private int orderAgain;
+    private String requiredDate;
+    private int newOrderNumber;
 
     private String productCode;
     private int verifyProduct;
@@ -67,11 +70,13 @@ public class Create {
         Scanner sc = new Scanner(System.in);
 
         try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn;
-            conn = DriverManager.getConnection(url);
+            conn = DriverManager.getConnection(url, username, password);
             System.out.println("Connection Successful");
             conn.setAutoCommit(false);
 
+            //Step 1
             //Enter Customer Number
             System.out.print("\nEnter Customer Number: ");
             customerNumber = sc.nextInt();
@@ -80,13 +85,13 @@ public class Create {
             PreparedStatement verifyCustomerStatement = conn.prepareStatement("SELECT COUNT(customerNumber) FROM customers WHERE customerNumber=?");
             verifyCustomerStatement.setInt(1, customerNumber);
 
-            ResultSet rs = verifyCustomerStatement.executeQuery();  
+            ResultSet verifyCustomerResultSet = verifyCustomerStatement.executeQuery();  
 
-            while(rs.next()){
-                verifyCustomer = rs.getInt("COUNT(customerNumber)");
+            while(verifyCustomerResultSet.next()){
+                verifyCustomer = verifyCustomerResultSet.getInt("COUNT(customerNumber)");
             }
 
-            rs.close();
+            verifyCustomerResultSet.close();
 
             //If customer does not exist then go back to start.
             if(verifyCustomer != 1){
@@ -94,12 +99,23 @@ public class Create {
                 placeOrder();
             }
             
+            //Step 2
             //Enter the Required Date.
-            System.out.print("\nEnter the Required Date: ");
-            //Add an input here
+            System.out.print("\nEnter the Required Date (YYYY-MM-DD): ");
+            requiredDate = sc.nextLine();
 
-            //Add here autogenerate Order Number
+            //Step 3
+            //Autogenerate Order Number
+            PreparedStatement incrementKeyStatement = conn.prepareStatement("SELECT max(orderNumber) FROM orders");
 
+            ResultSet incrementKeyResultSet = incrementKeyStatement.executeQuery();  
+
+            while(incrementKeyResultSet.next()){
+                //Increment Order Number
+                newOrderNumber = incrementKeyResultSet.getInt("orderNumber") + 1;
+            }
+
+            incrementKeyResultSet.close();
             verifyCustomerStatement.close();
             conn.commit();
             conn.close();
@@ -115,11 +131,13 @@ public class Create {
         Scanner sc = new Scanner(System.in);
         
         try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn;
-            conn = DriverManager.getConnection(url);
+            conn = DriverManager.getConnection(url, username, password);
             System.out.println("Connection Successful");
             conn.setAutoCommit(false);
 
+            //Step 4
             //Enter Product Code
             System.out.print("Enter Product Code: ");
             productCode = sc.nextLine();
@@ -142,6 +160,7 @@ public class Create {
                 placeOrder();
             }
 
+            //Step 5
             //Enter the Quantity of the Product
             System.out.print("\nEnter the Quantity of the Product: ");
             productQty = sc.nextInt();
@@ -164,6 +183,7 @@ public class Create {
                 placeOrder();
             }
 
+            //Step 6
             //Enter the PriceEach
             System.out.print("\nEnter the Price Each: ");
             priceEach = sc.nextFloat();
@@ -195,4 +215,10 @@ public class Create {
     public void updateProductQty(){
 
     }
+
+    public static void main(String[] args)
+	  {
+        Create c = new Create();
+	    c.placeOrder();
+	  }
 }

@@ -23,7 +23,7 @@ public class Orders {
 
         try {
             Connection conn;
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbsales?useTimezone=true&serverTimezone=UTC&user=root&password=12345");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbsales?useTimezone=true&serverTimezone=UTC&user=root&password=1234");
             System.out.println("Connection Successful");
             conn.setAutoCommit(false);
 
@@ -68,7 +68,7 @@ public class Orders {
         this.getOrder();
         try {
             Connection conn;
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbsales?useTimezone=true&serverTimezone=UTC&user=root&password=12345");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbsales?useTimezone=true&serverTimezone=UTC&user=root&password=1234");
             System.out.println("Press any key to cancel");
             sc.nextLine();
 
@@ -112,7 +112,7 @@ public class Orders {
         }
     }
 
-    /* public static void main (String args[]) {
+     public static void main (String args[]) {
         Scanner sc = new Scanner (System.in);
         int     choice = 0;
         System.out.println("Enter [1] Create and Order [2] Inquire Products [3] Retrieve Order  [4] Cancel Order:");
@@ -127,5 +127,5 @@ public class Orders {
         System.out.println("Press enter key to continue....");
         sc.nextLine();
     }
-    */
+    
 }
