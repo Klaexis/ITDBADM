@@ -7,15 +7,17 @@ public class Create {
     private MainMenu mainMenuTab;
 
     private String url = 
-    "jdbc:mysql://localhost:3306/dbsales?useTimezone=true&serverTimezone=UTC&user=root&password=12345";
+    "jdbc:mysql://localhost:3306/dbsales?useTimezone=true&serverTimezone=UTC&user=root&password=1234";
 
     private int customerNumber;
     private int verifyCustomer;
     private int orderAgain;
 
     private String productCode;
+    private int verifyProduct;
     private int productQty;
-    private int productEach;
+    private int getQuantity;
+    private int priceEach;
 
     public Create(){
         this.mainMenuTab = new MainMenu();
@@ -75,10 +77,10 @@ public class Create {
             customerNumber = sc.nextInt();
 
             //Get the count of customer to verify if customer exists.
-            PreparedStatement pstmt = conn.prepareStatement("SELECT COUNT(customerNumber) FROM customers WHERE customerNumber=?");
-            pstmt.setInt(1, customerNumber);
+            PreparedStatement verifyCustomerStatement = conn.prepareStatement("SELECT COUNT(customerNumber) FROM customers WHERE customerNumber=?");
+            verifyCustomerStatement.setInt(1, customerNumber);
 
-            ResultSet rs = pstmt.executeQuery();  
+            ResultSet rs = verifyCustomerStatement.executeQuery();  
 
             while(rs.next()){
                 verifyCustomer = rs.getInt("COUNT(customerNumber)");
@@ -98,7 +100,7 @@ public class Create {
 
             //Add here autogenerate Order Number
 
-            pstmt.close();
+            verifyCustomerStatement.close();
             conn.commit();
             conn.close();
         } catch (Exception e) {
@@ -122,14 +124,52 @@ public class Create {
             System.out.print("Enter Product Code: ");
             productCode = sc.nextLine();
 
+            //Get the count of product to verify if product exists.
+            PreparedStatement verifyProductStatement = conn.prepareStatement("SELECT COUNT(productCode) FROM products WHERE productCode=?");
+            verifyProductStatement.setString(1, productCode);
+
+            ResultSet verifyProductResultSet = verifyProductStatement.executeQuery();  
+
+            while(verifyProductResultSet.next()){
+                verifyProduct = verifyProductResultSet.getInt("COUNT(productCode)");
+            }
+
+            verifyProductResultSet.close();
+
+            //If product does not exist then go back to start.
+            if(verifyProduct != 1){
+                System.out.print("\nProduct does not exist.\n");
+                placeOrder();
+            }
+
             //Enter the Quantity of the Product
             System.out.print("\nEnter the Quantity of the Product: ");
             productQty = sc.nextInt();
 
+            //Get the quantityInStock of the product.
+            PreparedStatement qtyStockStatement = conn.prepareStatement("SELECT quantityInStock FROM products WHERE productCode=?");
+            qtyStockStatement.setString(1, productCode);
+
+            ResultSet qtyStockResultSet = qtyStockStatement.executeQuery();  
+
+            while(qtyStockResultSet.next()){
+                getQuantity = qtyStockResultSet.getInt("COUNT(productCode)");
+            }
+
+            qtyStockResultSet.close();
+
+            //If customer ordered more than the quantity in stock then go back to start.
+            if(productQty > getQuantity){
+                System.out.print("\nExceeded the total quantity in stock.\n");
+                placeOrder();
+            }
+
             //Enter the PriceEach
             System.out.print("\nEnter the Price Each: ");
-            productEach = sc.nextInt();
+            priceEach = sc.nextInt();
 
+            verifyProductStatement.close();
+            qtyStockStatement.close();
             conn.commit();
             conn.close();
         } catch (Exception e) {
