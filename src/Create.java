@@ -201,19 +201,50 @@ public class Create {
 
     //Step 9
     public void createOrder(){
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-        LocalDateTime now = LocalDateTime.now();  
-        System.out.println(dtf.format(now));  
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn;
+            conn = DriverManager.getConnection(url, username, password);
+            System.out.println("Connection Successful");
+            conn.setAutoCommit(false);
+
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+            LocalDateTime now = LocalDateTime.now();  
+            System.out.println(dtf.format(now));  
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        
     }
 
     //Step 10
     public void createOrderDetails(){
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn;
+            conn = DriverManager.getConnection(url, username, password);
+            System.out.println("Connection Successful");
+            conn.setAutoCommit(false);
 
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     //Step 11
     public void updateProductQty(){
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn;
+            conn = DriverManager.getConnection(url, username, password);
+            System.out.println("Connection Successful");
+            conn.setAutoCommit(false);
 
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public static void main(String[] args)
