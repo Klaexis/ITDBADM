@@ -17,7 +17,7 @@ public class Create {
     private int verifyProduct;
     private int productQty;
     private int getQuantity;
-    private int priceEach;
+    private float priceEach;
 
     public Create(){
         this.mainMenuTab = new MainMenu();
@@ -166,7 +166,7 @@ public class Create {
 
             //Enter the PriceEach
             System.out.print("\nEnter the Price Each: ");
-            priceEach = sc.nextInt();
+            priceEach = sc.nextFloat();
 
             verifyProductStatement.close();
             qtyStockStatement.close();
