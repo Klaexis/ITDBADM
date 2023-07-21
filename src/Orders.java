@@ -13,6 +13,7 @@ public class Orders {
     public String status;
     public String comments;
     public int customerNumber;
+    public int productCode; 
 
     public Orders() { }
 
@@ -30,8 +31,8 @@ public class Orders {
             System.out.println("Connection Successful");
             conn.setAutoCommit(false);
 
-            PreparedStatement pstmt = conn.prepareStatement(
-                    "SELECT orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber FROM orders WHERE orderNumber=? AND status NOT LIKE 'Cancelled';");
+            //PreparedStatement pstmt = conn.prepareStatement( "SELECT orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber FROM orders WHERE orderNumber=? AND status NOT LIKE 'Cancelled';");
+            PreparedStatement pstmt = conn.prepareStatement("SELECT o.orderNumber, o.orderDate, o.requiredDate, o.shippedDate, o.status, o.comments, o.customerNumber, od.productCode, od.quantityOrdered FROM orders o JOIN orderdetails od ON o.orderNumber = od.orderNumber WHERE o.orderNumber=? AND status NOT LIKE 'Cancelled';");
             pstmt.setInt(1, orderNumber);
 
             System.out.println("Press enter key to start retrieving the data");
@@ -46,6 +47,7 @@ public class Orders {
                 status = rs.getString("status");
                 comments = rs.getString("comments");
                 customerNumber = rs.getInt("customerNumber");
+                productCode = rs.getInt("productCode");
             }
             rs.close();
 
@@ -55,8 +57,9 @@ public class Orders {
                 System.out.println("Required Date:    " + requiredDate);
                 System.out.println("Shipped Date:     " + shippedDate);
                 System.out.println("Status:           " + status);
-                System.out.println("Customer Number:  " + customerNumber);
-                System.out.println("Comments:         " + comments + "\n");
+                System.out.println("Comments:         " + comments);
+                System.out.println("Product Code:         " + productCode);
+                System.out.println("Customer Number:  " + customerNumber+ "\n");
             } else {
                 System.out.println("\nNO ORDER FOUND\n"); 
             }
