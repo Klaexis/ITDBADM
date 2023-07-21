@@ -20,6 +20,7 @@ public class Orders {
         //Scanner sc = new Scanner(System.in);
         System.out.print("Enter Order Number: ");
         orderNumber = sc.nextInt();
+        sc.nextLine();
         //System.out.println(orderNumber);
 
         try {
@@ -33,8 +34,8 @@ public class Orders {
                     "SELECT orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber FROM orders WHERE orderNumber=? AND status NOT LIKE 'Cancelled';");
             pstmt.setInt(1, orderNumber);
 
-            //System.out.println("Press enter key to start retrieving the data");
-            //sc.nextLine();
+            System.out.println("Press enter key to start retrieving the data");
+            sc.nextLine();
 
             ResultSet rs = pstmt.executeQuery();
 
@@ -49,7 +50,7 @@ public class Orders {
             rs.close();
 
             if(orderDate != null){
-                System.out.println("\nORDER DETAILS");
+                System.out.println("ORDER DETAILS");
                 System.out.println("Order Date:       " + orderDate);
                 System.out.println("Required Date:    " + requiredDate);
                 System.out.println("Shipped Date:     " + shippedDate);
@@ -59,6 +60,10 @@ public class Orders {
             } else {
                 System.out.println("\nNO ORDER FOUND\n"); 
             }
+
+            System.out.println("Press enter key to end transaction");
+            sc.nextLine();
+
             pstmt.close();
             conn.commit();
             conn.close();
@@ -117,22 +122,4 @@ public class Orders {
             return 0;
         }
     }
-
-    /* 
-     public static void main (String args[]) {
-        Scanner sc = new Scanner (System.in);
-        int     choice = 0;
-        System.out.println("Enter [1] Create and Order [2] Inquire Products [3] Retrieve Order  [4] Cancel Order:");
-        choice = sc.nextInt();
-
-        Orders o = new Orders();
-        // if (choice == 1) o.getOrder();
-        // if (choice == 2) new Products().getInfo();
-        if (choice == 3) o.getOrder();
-        if (choice == 4) o.cancelOrder();
-
-        System.out.println("Press enter key to continue....");
-        sc.nextLine();
-    }*/
-    
 }
