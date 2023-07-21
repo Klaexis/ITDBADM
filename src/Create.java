@@ -213,13 +213,26 @@ public class Create {
             System.out.println("Connection Successful");
             conn.setAutoCommit(false);
 
+            // Get the datetime now
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();
-            System.out.println(dtf.format(now));
+
+            // Insert the values into the orders table
+            PreparedStatement createOrderStatement = conn.prepareStatement(
+                    "INSERT INTO orders (orderNumber, orderDate, requiredDate, status, customerNumber) "
+                            + "VALUES (?, ?, ?, ?, ?)"); // Insert statement for MySQL
+            createOrderStatement.setInt(1, newOrderNumber); // Set the first parameter; orderNumber to the order number
+            createOrderStatement.setString(2, dtf.format(now)); // Set the second parameter; orderDate to now
+            createOrderStatement.setString(3, requiredDate); // Set the third parameter; requiredDate
+            createOrderStatement.setString(4, "In Process"); // Set the fourth parameter; status to In Process
+            createOrderStatement.setInt(5, customerNumber); // Set the fifth parameter; customerNumber
+
+            createOrderStatement.close();
+            conn.commit();
+            conn.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     // Step 10
