@@ -14,8 +14,7 @@ public class Orders {
     public String comments;
     public int customerNumber;
 
-    public Orders() {
-    }
+    public Orders() { }
 
     public int getOrder(Scanner sc) {
         //Scanner sc = new Scanner(System.in);
