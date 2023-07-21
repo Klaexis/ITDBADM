@@ -20,6 +20,7 @@ public class Orders {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter Order Number:");
         orderNumber = sc.nextInt();
+        System.out.println(orderNumber);
 
         try {
             Connection conn;
