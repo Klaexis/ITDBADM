@@ -1,6 +1,10 @@
+import java.util.Scanner; 
+
 public class Main {
-    public static void main(String[] args)
-	  {
+    public static void main(String[] args) {
+
+		Scanner sc = new Scanner(System.in); 
+
 	    MainMenu mainMenu = new MainMenu();
 	    System.out.println("Transaction Management\n"
                           +"ITDBADM\n"
@@ -8,6 +12,8 @@ public class Main {
 	                      +"Aleck Jasper Lim\n"
 	                      +"Jeff Alison Wang\n"
 	                      +"Jonathan Lin\n");
-	    mainMenu.Start();
+	    mainMenu.Starts(sc);
+
+		sc.close();
 	  }
 }

@@ -16,15 +16,15 @@ public class Orders {
 
     public Orders() {}
 
-    public int getOrder() {
-        Scanner sc = new Scanner(System.in);
+    public int getOrder(Scanner sc) {
+        //Scanner sc = new Scanner(System.in);
         System.out.println("Enter Order Number:");
         orderNumber = sc.nextInt();
         System.out.println(orderNumber);
 
         try {
             Connection conn;
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbsales?useTimezone=true&serverTimezone=UTC&user=root&password=1234");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/dbsales?useTimezone=true&serverTimezone=UTC&user=root&password=bakugan02");
             System.out.println("Connection Successful");
             conn.setAutoCommit(false);
 
@@ -64,6 +64,7 @@ public class Orders {
         }
     }
 
+    /* 
     public int cancelOrder() {
         Scanner sc = new Scanner(System.in);
         this.getOrder();
@@ -111,8 +112,9 @@ public class Orders {
             System.out.println(e.getMessage());
             return 0;
         }
-    }
+    }*/
 
+    /* 
      public static void main (String args[]) {
         Scanner sc = new Scanner (System.in);
         int     choice = 0;
@@ -127,6 +129,6 @@ public class Orders {
 
         System.out.println("Press enter key to continue....");
         sc.nextLine();
-    }
+    }*/
     
 }
