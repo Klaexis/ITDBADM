@@ -43,7 +43,7 @@ public class MainMenu {
             isContinue = true;
         } else if (userInput == 4)// Cancel Order
         {
-            // ordersTab.cancelOrder();
+            ordersTab.cancelOrder(sc);
             isContinue = true;
         } else if (userInput == 5)// Exit the Program
         {
