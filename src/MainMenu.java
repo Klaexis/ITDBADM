@@ -43,7 +43,11 @@ public class MainMenu {
             isContinue = true;
         } else if (userInput == 4)// Cancel Order
         {
+<<<<<<< Updated upstream
             // ordersTab.cancelOrder();
+=======
+            ordersTab.cancelOrder(sc);
+>>>>>>> Stashed changes
             isContinue = true;
         } else if (userInput == 5)// Exit the Program
         {
