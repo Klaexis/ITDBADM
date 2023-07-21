@@ -83,7 +83,8 @@ public class Create {
 
             // Get the count of customer to verify if customer exists.
             PreparedStatement verifyCustomerStatement = conn
-                    .prepareStatement("SELECT COUNT(customerNumber) FROM customers WHERE customerNumber=?");
+                    .prepareStatement(
+                            "SELECT COUNT(customerNumber) FROM customers WHERE customerNumber=? LOCK IN SHARE MODE");
             verifyCustomerStatement.setInt(1, customerNumber);
 
             ResultSet verifyCustomerResultSet = verifyCustomerStatement.executeQuery();
@@ -107,7 +108,8 @@ public class Create {
 
             // Step 3
             // Autogenerate Order Number
-            PreparedStatement incrementKeyStatement = conn.prepareStatement("SELECT max(orderNumber) FROM orders");
+            PreparedStatement incrementKeyStatement = conn
+                    .prepareStatement("SELECT max(orderNumber) FROM orders LOCK IN SHARE MODE");
 
             ResultSet incrementKeyResultSet = incrementKeyStatement.executeQuery();
 
@@ -145,7 +147,7 @@ public class Create {
 
             // Get the count of product to verify if product exists.
             PreparedStatement verifyProductStatement = conn
-                    .prepareStatement("SELECT COUNT(productCode) FROM products WHERE productCode=?");
+                    .prepareStatement("SELECT COUNT(productCode) FROM products WHERE productCode=? LOCK IN SHARE MODE");
             verifyProductStatement.setString(1, productCode);
 
             ResultSet verifyProductResultSet = verifyProductStatement.executeQuery();
@@ -169,7 +171,7 @@ public class Create {
 
             // Get the quantityInStock of the product.
             PreparedStatement qtyStockStatement = conn
-                    .prepareStatement("SELECT quantityInStock FROM products WHERE productCode=?");
+                    .prepareStatement("SELECT quantityInStock FROM products WHERE productCode=? LOCK IN SHARE MODE");
             qtyStockStatement.setString(1, productCode);
 
             ResultSet qtyStockResultSet = qtyStockStatement.executeQuery();
